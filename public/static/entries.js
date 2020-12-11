@@ -4,7 +4,7 @@
 let entryTemplate;
 // Setting the entry template to semantics recieved from server
 entryTemplate_set().then(() => {
-	m_entries.appendChild(new_entry(entryTemplate));
+	m_entries.appendChild(new_entry_withCurrentTime(entryTemplate));
 });
 
 // HTML node in which all entries are put
@@ -19,11 +19,18 @@ async function entryTemplate_set() {
 	entryTemplate = await getNodeFromFetchedView('entry');
 }
 
+function new_entry_withCurrentTime(entryTemplate) {
+	let newEntry = new_entry(entryTemplate);
+	newEntry.time.value = formatTime(new Date());
+	return newEntry;
+}
+
 /* --------------------------------- Events --------------------------------- */
 
 function a_entry_enterKeyup(e, entryTemplate) {
 	if (e.keyCode === 13) {
-		const newEntry = new_entry(entryTemplate);
+		let targetTime = e.target.parentElement.time.value;
+		const newEntry = new_entry_withSetTime(entryTemplate, targetTime);
 		e.target.parentElement.after(newEntry);
 		newEntry.firstElementChild.select();
 	}
@@ -44,6 +51,12 @@ async function getNodeFromFetchedView(templateName) {
 	innerHtml = innerHtml.trim();
 	temp.innerHTML = innerHtml;
 	return temp.content.firstChild;
+}
+
+function new_entry_withSetTime(entryTemplate, formattedTime) {
+	let newEntry = new_entry(entryTemplate);
+	newEntry.time.value = formattedTime;
+	return newEntry;
 }
 
 function new_entry(entryTemplate) {
@@ -68,4 +81,30 @@ function addingEntryEventListeners(
 
 function preventDefault(e) {
 	e.preventDefault();
+}
+
+/* Date formatting functions */
+
+function formatTime(date) {
+	let hour =
+		(date.getHours() < 10 ? '0' : '') +
+		date.getHours();
+	let minute =
+		(date.getMinutes() < 10 ? '0' : '') +
+		date.getMinutes();
+	//let second = (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
+
+	return hour + ':' + minute; // + ":" + second;
+}
+
+function formatDate(date) {
+	return (
+		date.getFullYear() +
+		'-' +
+		(date.getMonth() + 1 < 10 ? '0' : '') +
+		(date.getMonth() + 1) +
+		'-' +
+		(date.getDate() < 10 ? '0' : '') +
+		date.getDate()
+	);
 }

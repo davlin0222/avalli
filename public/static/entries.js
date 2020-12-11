@@ -29,10 +29,20 @@ function new_entry_withCurrentTime(entryTemplate) {
 
 function a_entry_enterKeyup(e, entryTemplate) {
 	if (e.keyCode === 13) {
-		let targetTime = e.target.parentElement.time.value;
-		const newEntry = new_entry_withSetTime(entryTemplate, targetTime);
+		const newEntry = new_entry(entryTemplate);
+		
 		e.target.parentElement.after(newEntry);
 		newEntry.firstElementChild.select();
+		
+		// If newEntry is the last one of the entries
+		if (newEntry.nextElementSibling !== null) {
+			// Set time to same as target entry
+			newEntry.time.value = e.target.parentElement.time.value;
+		}
+		else {
+			// Set time to present
+			newEntry.time.value = formatTime(new Date());
+		}
 	}
 }
 

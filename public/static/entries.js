@@ -19,6 +19,16 @@ async function entryTemplate_set() {
 	entryTemplate = await getNodeFromFetchedView('entry');
 }
 
+/* --------------------------------- Events --------------------------------- */
+
+function a_entry_enterKeyup(e, entryTemplate) {
+	if (e.keyCode === 13) {
+		const newEntry = new_entry(entryTemplate);
+		e.target.parentElement.after(newEntry);
+		newEntry.firstElementChild.select();
+	}
+}
+
 /* ----------------------------- Pure functions ----------------------------- */
 
 // Fetching selected view from templates on server
@@ -46,10 +56,13 @@ function addingEntryEventListeners(
 	newEntry,
 	entryTemplate
 ) {
-	newEntry.addEventListener(
-		'submit',
-		preventDefault
-	);
+	newEntry.addEventListener('submit', preventDefault);
+	for (let child of newEntry.children) {
+		child.addEventListener(
+			'keyup',
+			(e) => a_entry_enterKeyup(e, entryTemplate)
+		);
+	}
 	return newEntry;
 }
 

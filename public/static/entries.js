@@ -4,7 +4,7 @@
 let entryTemplate;
 // Setting the entry template to semantics recieved from server
 entryTemplate_set().then(() => {
-	m_entries.appendChild(entryTemplate);
+	m_entries.appendChild(new_entry(entryTemplate));
 });
 
 // HTML node in which all entries are put
@@ -34,4 +34,25 @@ async function getNodeFromFetchedView(templateName) {
 	innerHtml = innerHtml.trim();
 	temp.innerHTML = innerHtml;
 	return temp.content.firstChild;
+}
+
+function new_entry(entryTemplate) {
+	let newEntry = entryTemplate.cloneNode(true);
+	newEntry = addingEntryEventListeners(newEntry, entryTemplate);
+	return newEntry;
+}
+
+function addingEntryEventListeners(
+	newEntry,
+	entryTemplate
+) {
+	newEntry.addEventListener(
+		'submit',
+		preventDefault
+	);
+	return newEntry;
+}
+
+function preventDefault(e) {
+	e.preventDefault();
 }

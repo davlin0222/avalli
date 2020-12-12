@@ -29,19 +29,19 @@ if ($_GET['putorupdate']){
 	file_put_contents(path, json_encode($updated_entries));
 }
 else if ($_GET['delete']) {
+	$id = $_GET['delete'];
 	$entries_prior = json_decode(file_get_contents(path));
-	/* $updated_entries = [];
+	$updated_entries = [];
 	foreach ($entries_prior as $key => $entry_prior) {
-		if ($entry_prior->id === $newEntry['id']) {
-			$entries_prior_hasId = true;
-			$updated_entries[] = $newEntry;
-		} else {
+		if ($entry_prior->id !== $id) {
 			$updated_entries[] = $entry_prior;
 		}
 	}
-	if (!$entries_prior_hasId) {
-		$updated_entries[] = $newEntry;
-	} */
+
+	usort($updated_entries, function ($first, $second) {
+		return $first->date > $second->date;
+	});
+	file_put_contents(path, json_encode($updated_entries));
 }
 else if ($_GET['getEntries']) {
 	header('Content-Type:application/json');

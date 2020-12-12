@@ -24,11 +24,9 @@ async function renderEntriesOfSelectedDate() {
 	let selectedDate_startOfNextDay = 
 		startOfNextDay(new Date(selectedDate_startOfDay));
 
-	fetchEntryTemplateNode()
-		.then((entryTemplateNode) => {
-			// Render usused entry
-			m_entries.appendChild(new_entry_withPresentTime(v4(), entryTemplateNode));
-		});
+	let entryTemplateNode = await fetchEntryTemplateNode();
+	await setEntriesFromDb(m_entries, entryTemplateNode);
+	await m_entries.appendChild(new_entry_withPresentTime(v4(), entryTemplateNode));
 }
 
 async function fetchEntryTemplateNode() {
@@ -37,6 +35,16 @@ async function fetchEntryTemplateNode() {
 	let entry_outerHtml = await res.text();
 	let entryTemplateNode = createNodeFromOuterHtml(entry_outerHtml);
 	return entryTemplateNode
+}
+
+async function setEntriesFromDb(m_entries, entryTemplateNode) {
+	let res = await fetch('https://creatorise.com/avalli/public/src/entries.php?getEntries=true');
+	let entries_data = await res.json();
+    console.log('setEntriesFromDb ~ entries_data', ...entries_data);
+	entries_data.forEach((entryObj) => {
+		console.log('entry: ', entryObj);
+		m_entries.appendChild(new_entry_withData(entryObj, entryTemplateNode));
+	});
 }
 
 /* --------------------------------- Events --------------------------------- */
@@ -63,7 +71,7 @@ function a_entry_enterKeyup(e, entryTemplate) {
 function a_entry_onchange(e, id) {
 	let a_entry_data = new FormData(e.target.parentElement);
 	let datetime = Date.parse(
-		a_date.value + 'T' + a_entry_data.get('time')
+		a_datePicker_get() + 'T' + a_entry_data.get('time')
 	);
 	a_entry_data.append('datetime', datetime);
 	a_entry_data.delete('time');
@@ -80,6 +88,15 @@ function a_entry_onchange(e, id) {
 }
 
 /* ----------------------------- Pure functions ----------------------------- */
+
+function new_entry_withData(entryObj, entryTemplate) {
+	let newEntry = new_entry(entryObj.id, entryTemplate);
+	newEntry.food.value = entryObj.food;
+	let date = new Date();
+	date.setTime(entryObj.datetime);
+	newEntry.time.value = formatTime(date);
+	return newEntry;
+}
 
 function new_entry_withPresentTime(id, entryTemplate) {
 	let newEntry = new_entry(id, entryTemplate);
@@ -116,7 +133,7 @@ function createNodeFromOuterHtml(html) {
 	return temp.content.firstChild;
 }
 
-/* Date formatting functions */
+/* --------------------- Pure date formatting functions --------------------- */
 
 function formatTime(date) {
 	let hour = (date.getHours() < 10 ? '0' : '') + date.getHours();
@@ -143,6 +160,7 @@ function startOfNextDay(date) {
 	return date_startOfNextDay;
 }
 
+/* not in use */
 function datetime_range_get(datetime) {
 	let {date_range_start, date_range_end} = 
 		date_range_get(new Date(datetime));
@@ -150,7 +168,6 @@ function datetime_range_get(datetime) {
 	let datetime_range_end = date_range_end.getTime();
 	return {datetime_range_start, datetime_range_end};
 }
-
 function date_range_get(date) {
 	let date_range_start = dateOfBeginningOfDay(date);
 	let date_nextDay = new Date(date);
@@ -158,7 +175,6 @@ function date_range_get(date) {
 	let date_range_end = dateOfBeginningOfDay(date_nextDay);
 	return {date_range_start, date_range_end};
 }
-
 function dateOfBeginningOfDay(date) {
 	date.setHours(0);
 	date.setMinutes(0);

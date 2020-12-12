@@ -40,11 +40,30 @@ async function fetchEntryTemplateNode() {
 async function setEntriesFromDb(m_entries, entryTemplateNode) {
 	let res = await fetch('https://creatorise.com/avalli/public/src/entries.php?getEntries=true');
 	let entries_data = await res.json();
-    console.log('setEntriesFromDb ~ entries_data', ...entries_data);
 	entries_data.forEach((entryObj) => {
-		console.log('entry: ', entryObj);
 		m_entries.appendChild(new_entry_withData(entryObj, entryTemplateNode));
 	});
+}
+
+function entriesDatabase_putOrUpdate(id, a_entry_rawFormData) {
+	let a_entry_data = a_entry_rawFormData;
+	let datetime = Date.parse(
+		a_datePicker_get() + 'T' + a_entry_data.get('time')
+	);
+	a_entry_data.append('datetime', datetime);
+	a_entry_data.delete('time');
+	a_entry_data.append('id', id);
+	
+	fetch('https://creatorise.com/avalli/public/src/entries.php?putorupdate=true', 
+		{
+			method: 'POST',
+			body: a_entry_data
+		}
+	);
+}
+
+function entriesDatabase_delete(id) {
+	fetch('https://creatorise.com/avalli/public/src/entries.php?delete=' + id);
 }
 
 /* --------------------------------- Events --------------------------------- */
@@ -65,26 +84,26 @@ function a_entry_enterKeyup(e, entryTemplate) {
 			// Set time to present
 			newEntry.time.value = formatTime(new Date());
 		}
+		// Remove node
+		if (!e.target.parentNode.food.value) {
+			e.target.parentNode.parentNode.removeChild(e.target.parentNode)
+		}
 	}
 }
 
-function a_entry_onchange(e, id) {
-	let a_entry_data = new FormData(e.target.parentElement);
-	let datetime = Date.parse(
-		a_datePicker_get() + 'T' + a_entry_data.get('time')
-	);
-	a_entry_data.append('datetime', datetime);
-	a_entry_data.delete('time');
-	a_entry_data.append('id', id);
+function a_entry_update(e, id) {
+	let a_entry_rawFormData = new FormData(e.target.parentElement);
 	
-	fetch('https://creatorise.com/avalli/public/src/entries.php?update=true', 
-		{
-			method: 'POST',
-			body: a_entry_data
-		})
-		.then((req) => req.text())
-		.then((res) => console.log('res:', res)
-	);
+	if (a_entry_rawFormData.get('food')) {
+		// If entry has food, put or update database
+		entriesDatabase_putOrUpdate(id, a_entry_rawFormData);
+	}
+	else if (e.target.attributes.name.value) {
+		// If entry's food is empty
+		entriesDatabase_delete(id);
+		// Remove node
+		e.target.parentNode.parentNode.removeChild(e.target.parentNode)
+	}
 }
 
 /* ----------------------------- Pure functions ----------------------------- */
@@ -112,7 +131,8 @@ function new_entry(id, entryTemplate) {
 
 function addingEntryEventListeners(newEntry, id, entryTemplate) {
 	newEntry.addEventListener('submit', preventDefault);
-	newEntry.addEventListener('change', (e) => a_entry_onchange(e, id));
+	newEntry.addEventListener('focusout', (e) => a_entry_update(e, id));
+	newEntry.addEventListener('change', (e) => a_entry_update(e, id));
 	for (let child of newEntry.children) {
 		child.addEventListener(
 			'keyup',

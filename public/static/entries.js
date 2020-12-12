@@ -7,6 +7,8 @@ a_datePicker_set(new Date());
 
 renderEntriesOfSelectedDate();
 
+addEventListenersToDatePickerShifters();
+
 /* ------------------------------- Procedures ------------------------------- */
 
 function a_datePicker_set(date) {
@@ -16,6 +18,10 @@ function a_datePicker_set(date) {
 function a_datePicker_get() {
 	const a_datePicker = document.querySelector('.a_datePicker--picker');
 	return a_datePicker.value;
+}
+function addEventListenersToDatePickerShifters() {
+	document.querySelector('.a_datePicker--shifter._-1').addEventListener('click', () => selectedDate_shift(-1));
+	document.querySelector('.a_datePicker--shifter._1').addEventListener('click', () => selectedDate_shift(+1));
 }
 
 async function renderEntriesOfSelectedDate() {
@@ -68,6 +74,14 @@ function entriesDatabase_delete(id) {
 }
 
 /* --------------------------------- Events --------------------------------- */
+
+function selectedDate_shift(factor) {
+	let datetime = Date.parse(a_datePicker_get() + "T00:00");
+	let newDate = new Date();
+	newDate.setTime(datetime);
+	newDate.setDate(newDate.getDate() + factor);
+	a_datePicker_set(newDate);
+}
 
 function a_entry_enterKeyup(e, entryTemplate) {
 	if (e.keyCode === 13) {

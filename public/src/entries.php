@@ -46,5 +46,19 @@ else if ($_GET['delete']) {
 else if ($_GET['getEntries']) {
 	header('Content-Type:application/json');
 	$entries_prior_json = file_get_contents(path);
-	echo $entries_prior_json;
+	$entries_prior = json_decode($entries_prior_json);
+	if ($_GET['start-datetime'] && $_GET['end-datetime']) {
+		$entries_prior = json_decode($entries_prior_json);
+		$selected_entries = [];
+		foreach ($entries_prior as $entry_prior) {
+			if ($entry_prior->datetime >= $_GET['start-datetime'] && $entry_prior->datetime < $_GET['end-datetime']) {
+				$selected_entries[] = $entry_prior;
+			}
+		}
+		// $selected_entries[] = $_GET['end-datetime'];
+		echo json_encode($selected_entries);
+	}
+	else {
+		echo $entries_prior_json;
+	}
 }

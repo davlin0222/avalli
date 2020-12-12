@@ -4,6 +4,7 @@ const publicSrcPath = 'https://creatorise.com/avalli-v1.3-alpha/public/src';
 /* --------------------------------- OnLoad --------------------------------- */
 
 a_datePicker_set(new Date());
+a_datePicker_addEventListener();
 
 renderEntriesOfSelectedDate();
 
@@ -19,6 +20,10 @@ function a_datePicker_get() {
 	const a_datePicker = document.querySelector('.a_datePicker--picker');
 	return a_datePicker.value;
 }
+function a_datePicker_addEventListener() {
+	const a_datePicker = document.querySelector('.a_datePicker');
+	a_datePicker.addEventListener('change', renderEntriesOfSelectedDate);
+}
 function addEventListenersToDatePickerShifters() {
 	document.querySelector('.a_datePicker--shifter._-1').addEventListener('click', () => selectedDate_shift(-1));
 	document.querySelector('.a_datePicker--shifter._1').addEventListener('click', () => selectedDate_shift(+1));
@@ -26,13 +31,14 @@ function addEventListenersToDatePickerShifters() {
 
 async function renderEntriesOfSelectedDate() {
 	const m_entries = document.querySelector('.m_entries');
+	m_entries.innerHTML = "";
 
-	let selectedDate_startOfDay = Date.parse(a_datePicker_get() + "T00:00");
+	let selectedDate_startOfDay = new Date(Date.parse(a_datePicker_get() + "T00:00"));
 	let selectedDate_startOfNextDay = 
 		startOfNextDay(new Date(selectedDate_startOfDay));
 
 	let entryTemplateNode = await fetchEntryTemplateNode();
-	await setEntriesFromDb(m_entries, entryTemplateNode);
+	await setEntriesFromDb(m_entries, entryTemplateNode, selectedDate_startOfDay, selectedDate_startOfNextDay);
 	await m_entries.appendChild(new_entry_withPresentTime(v4(), entryTemplateNode));
 }
 
@@ -44,8 +50,8 @@ async function fetchEntryTemplateNode() {
 	return entryTemplateNode
 }
 
-async function setEntriesFromDb(m_entries, entryTemplateNode) {
-	let res = await fetch(publicSrcPath + '/entries.php?getEntries=true');
+async function setEntriesFromDb(m_entries, entryTemplateNode, selectedDate_startOfDay, selectedDate_startOfNextDay) {
+	let res = await fetch(publicSrcPath + '/entries.php?getEntries=true&start-datetime=' + selectedDate_startOfDay.getTime() + '&end-datetime=' + selectedDate_startOfNextDay.getTime());
 	let entries_data = await res.json();
 	entries_data.forEach((entryObj) => {
 		m_entries.appendChild(new_entry_withData(entryObj, entryTemplateNode));
@@ -81,6 +87,7 @@ function selectedDate_shift(factor) {
 	newDate.setTime(datetime);
 	newDate.setDate(newDate.getDate() + factor);
 	a_datePicker_set(newDate);
+	renderEntriesOfSelectedDate();
 }
 
 function a_entry_enterKeyup(e, entryTemplate) {

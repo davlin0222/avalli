@@ -1,5 +1,5 @@
 import { v4 } from '../../node_modules/uuid/dist/esm-browser/index.js';
-const publicSrcPath = 'https://creatorise.com/avalli-v1.2-alpha/public/src';
+const publicSrcPath = 'https://creatorise.com/avalli-v1.3-alpha/public/src';
 
 /* --------------------------------- OnLoad --------------------------------- */
 

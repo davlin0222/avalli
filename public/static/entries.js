@@ -2,24 +2,32 @@ import { v4 } from '../../node_modules/uuid/dist/esm-browser/index.js';
 
 /* --------------------------------- OnLoad --------------------------------- */
 
-// HTML node in which all entries are put
-const m_entries = document.querySelector('.m_entries');
+a_datePicker_set(new Date());
 
-// HTML node of current date
-const a_date = document.querySelector('.a_date');
-a_date.value = formatDate(new Date());
-
-
-// State object containing semantics of an empty entry
-let entryTemplate;
-
-// Setting the entry template to semantics recieved from server
-entryTemplate_set().then(() => {
-	m_entries.appendChild(new_entry_withCurrentTime(v4(), entryTemplate));
-});
+renderEntriesOfSelectedDate();
 
 /* ------------------------------- Procedures ------------------------------- */
 
+function a_datePicker_set(date) {
+	const a_datePicker = document.querySelector('.a_datePicker');
+	a_datePicker.value = formatDate(date);
+}
+function a_datePicker_get() {
+	const a_datePicker = document.querySelector('.a_datePicker');
+	return a_datePicker.value;
+}
+
+function renderEntriesOfSelectedDate() {
+	let selectedDate_startOfDay = Date.parse(a_datePicker_get() + "T00:00");
+	let selectedDate_startOfNextDay = 
+		startOfNextDay(new Date(selectedDate_startOfDay));
+
+	// TODO Render entries from database
+
+	// TODO Render unused entry
+}
+
+// Setting the entry template to semantics recieved from server
 async function entryTemplate_set() {
 	// Fetching entry template view from server
 	let req = await fetch(
@@ -29,14 +37,6 @@ async function entryTemplate_set() {
 
 	entryTemplate = createNodeFromString(entryHtml);
 }
-
-function new_entry_withCurrentTime(id, entryTemplate) {
-	let newEntry = new_entry(id, entryTemplate);
-	newEntry.time.value = formatTime(new Date());
-	return newEntry;
-}
-
-
 
 /* --------------------------------- Events --------------------------------- */
 
@@ -79,6 +79,12 @@ function a_entry_onchange(e, id) {
 }
 
 /* ----------------------------- Pure functions ----------------------------- */
+
+function new_entry_withCurrentTime(id, entryTemplate) {
+	let newEntry = new_entry(id, entryTemplate);
+	newEntry.time.value = formatTime(new Date());
+	return newEntry;
+}
 
 function new_entry(id, entryTemplate) {
 	let newEntry = entryTemplate.cloneNode(true);
@@ -127,4 +133,35 @@ function formatDate(date) {
 		'-' +
 		(date.getDate() < 10 ? '0' : '') + date.getDate()
 	);
+}
+
+function startOfNextDay(date) {
+	let date_nextDay = date;
+	date_nextDay.setDate(date_nextDay.getDate() + 1);
+	let date_startOfNextDay = dateOfBeginningOfDay(date_nextDay);
+	return date_startOfNextDay;
+}
+
+function datetime_range_get(datetime) {
+	let {date_range_start, date_range_end} = 
+		date_range_get(new Date(datetime));
+	let datetime_range_start = date_range_start.getTime();
+	let datetime_range_end = date_range_end.getTime();
+	return {datetime_range_start, datetime_range_end};
+}
+
+function date_range_get(date) {
+	let date_range_start = dateOfBeginningOfDay(date);
+	let date_nextDay = new Date(date);
+	date_nextDay.setDate(date_nextDay.getDate() + 1);
+	let date_range_end = dateOfBeginningOfDay(date_nextDay);
+	return {date_range_start, date_range_end};
+}
+
+function dateOfBeginningOfDay(date) {
+	date.setHours(0);
+	date.setMinutes(0);
+	date.setSeconds(0);
+	date.setMilliseconds(0);
+	return date;
 }

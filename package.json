@@ -1,0 +1,22 @@
+{
+  "name": "avalli",
+  "version": "1.0.0",
+  "description": "Your personal daily intake diary and food journal",
+  "main": "public/index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davlin0222/avalli.git"
+  },
+  "author": "David Lindström",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/davlin0222/avalli/issues"
+  },
+  "homepage": "https://github.com/davlin0222/avalli#readme",
+  "dependencies": {
+    "uuid": "^8.3.2"
+  }
+}

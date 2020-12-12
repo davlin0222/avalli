@@ -30,3 +30,8 @@ if ($_GET['update']){
 	});
 	file_put_contents(path, json_encode($updated_entries));
 }
+else if ($_GET['getEntries']) {
+	header('Content-Type:application/json');
+	$entries_prior_json = file_get_contents(path);
+	echo $entries_prior_json;
+}

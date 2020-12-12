@@ -17,25 +17,26 @@ function a_datePicker_get() {
 	return a_datePicker.value;
 }
 
-function renderEntriesOfSelectedDate() {
+async function renderEntriesOfSelectedDate() {
+	const m_entries = document.querySelector('.m_entries');
+
 	let selectedDate_startOfDay = Date.parse(a_datePicker_get() + "T00:00");
 	let selectedDate_startOfNextDay = 
 		startOfNextDay(new Date(selectedDate_startOfDay));
 
-	// TODO Render entries from database
-
-	// TODO Render unused entry
+	fetchEntryTemplateNode()
+		.then((entryTemplateNode) => {
+			// Render usused entry
+			m_entries.appendChild(new_entry_withPresentTime(v4(), entryTemplateNode));
+		});
 }
 
-// Setting the entry template to semantics recieved from server
-async function entryTemplate_set() {
+async function fetchEntryTemplateNode() {
 	// Fetching entry template view from server
-	let req = await fetch(
-		'https://creatorise.com/avalli/public/src/views.php?getView=entry'
-		);
-	let entryHtml = await req.text();
-
-	entryTemplate = createNodeFromString(entryHtml);
+	let res = await fetch('https://creatorise.com/avalli/public/src/views.php?getView=entry');
+	let entry_outerHtml = await res.text();
+	let entryTemplateNode = createNodeFromOuterHtml(entry_outerHtml);
+	return entryTemplateNode
 }
 
 /* --------------------------------- Events --------------------------------- */
@@ -80,7 +81,7 @@ function a_entry_onchange(e, id) {
 
 /* ----------------------------- Pure functions ----------------------------- */
 
-function new_entry_withCurrentTime(id, entryTemplate) {
+function new_entry_withPresentTime(id, entryTemplate) {
 	let newEntry = new_entry(id, entryTemplate);
 	newEntry.time.value = formatTime(new Date());
 	return newEntry;
@@ -108,7 +109,7 @@ function preventDefault(e) {
 	e.preventDefault();
 }
 
-function createNodeFromString(html) {
+function createNodeFromOuterHtml(html) {
 	const temp = document.createElement('template');
 	html = html.trim();
 	temp.innerHTML = html;

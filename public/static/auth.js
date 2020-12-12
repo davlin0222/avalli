@@ -13,5 +13,8 @@ async function a_auth_onsubmit(e) {
 		.then((res) => res.text())
 		.then((msg) => {
        		console.log('.then ~ msg', msg);
+			if (msg === 'loggedin') {
+				location.reload(); 
+			}
 		});
 }

@@ -1,4 +1,5 @@
 import { v4 } from '../../node_modules/uuid/dist/esm-browser/index.js';
+const publicSrcPath = 'https://creatorise.com/avalli/public/src';
 
 /* --------------------------------- OnLoad --------------------------------- */
 
@@ -31,14 +32,14 @@ async function renderEntriesOfSelectedDate() {
 
 async function fetchEntryTemplateNode() {
 	// Fetching entry template view from server
-	let res = await fetch('https://creatorise.com/avalli-dev/public/src/views.php?getView=entry');
+	let res = await fetch(publicSrcPath + '/views.php?getView=entry');
 	let entry_outerHtml = await res.text();
 	let entryTemplateNode = createNodeFromOuterHtml(entry_outerHtml);
 	return entryTemplateNode
 }
 
 async function setEntriesFromDb(m_entries, entryTemplateNode) {
-	let res = await fetch('https://creatorise.com/avalli-dev/public/src/entries.php?getEntries=true');
+	let res = await fetch(publicSrcPath + '/entries.php?getEntries=true');
 	let entries_data = await res.json();
 	entries_data.forEach((entryObj) => {
 		m_entries.appendChild(new_entry_withData(entryObj, entryTemplateNode));
@@ -54,7 +55,7 @@ function entriesDatabase_putOrUpdate(id, a_entry_rawFormData) {
 	a_entry_data.delete('time');
 	a_entry_data.append('id', id);
 	
-	fetch('https://creatorise.com/avalli-dev/public/src/entries.php?putorupdate=true', 
+	fetch(publicSrcPath + '/entries.php?putorupdate=true', 
 		{
 			method: 'POST',
 			body: a_entry_data
@@ -63,7 +64,7 @@ function entriesDatabase_putOrUpdate(id, a_entry_rawFormData) {
 }
 
 function entriesDatabase_delete(id) {
-	fetch('https://creatorise.com/avalli-dev/public/src/entries.php?delete=' + id);
+	fetch(publicSrcPath + '/entries.php?delete=' + id);
 }
 
 /* --------------------------------- Events --------------------------------- */

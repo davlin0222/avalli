@@ -1,3 +1,11 @@
-<input class="a_datePicker" name="date" type="date">
-<div class="m_entries"></div>
+<div class="o_entries">
+	<div class="a_datePicker">
+		<button class="a_datePicker--shifter" onclick="selectedDate_shift(-1)">&#8678;</button>
+		<input class="a_datePicker--picker" name="date" type="date">
+		<button class="a_datePicker--shifter" onclick="selectedDate_shift(+1)">&#8680;</button>
+	</div>
+	
+	<div class="m_entries"></div>
+</div>
+
 <script type="module" src="public/static/entries.js" defer></script>

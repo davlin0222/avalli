@@ -10,11 +10,11 @@ renderEntriesOfSelectedDate();
 /* ------------------------------- Procedures ------------------------------- */
 
 function a_datePicker_set(date) {
-	const a_datePicker = document.querySelector('.a_datePicker');
+	const a_datePicker = document.querySelector('.a_datePicker--picker');
 	a_datePicker.value = formatDate(date);
 }
 function a_datePicker_get() {
-	const a_datePicker = document.querySelector('.a_datePicker');
+	const a_datePicker = document.querySelector('.a_datePicker--picker');
 	return a_datePicker.value;
 }
 

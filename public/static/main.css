@@ -70,7 +70,5 @@ input {
 }
 
 .a_entry--time {
-  max-width: -webkit-min-content;
-  max-width: -moz-min-content;
-  max-width: min-content;
+  padding: 10px;
 }

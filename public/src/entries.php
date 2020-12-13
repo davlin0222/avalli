@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!$_SESSION['avalli']['isLoggedIn']) {
+	return;
+}
+
 const path = '../../data/entries.json';
 
 if ($_GET['putorupdate']){
@@ -30,7 +36,9 @@ if ($_GET['putorupdate']){
 }
 else if ($_GET['delete']) {
 	$id = $_GET['delete'];
-	$entries_prior = json_decode(file_get_contents(path));
+	$users = json_decode(file_get_contents(path));
+	$users = (array)$users;
+	$entries_prior = $users[$_SESSION['avalli']['email']];
 	$updated_entries = [];
 	foreach ($entries_prior as $key => $entry_prior) {
 		if ($entry_prior->id !== $id) {
@@ -45,10 +53,11 @@ else if ($_GET['delete']) {
 }
 else if ($_GET['getEntries']) {
 	header('Content-Type:application/json');
-	$entries_prior_json = file_get_contents(path);
-	$entries_prior = json_decode($entries_prior_json);
+
+	$users = json_decode(file_get_contents(path));
+	$users = (array)$users;
+	$entries_prior = $users[$_SESSION['avalli']['email']];
 	if ($_GET['start-datetime'] && $_GET['end-datetime']) {
-		$entries_prior = json_decode($entries_prior_json);
 		$selected_entries = [];
 		foreach ($entries_prior as $entry_prior) {
 			if ($entry_prior->datetime >= $_GET['start-datetime'] && $entry_prior->datetime < $_GET['end-datetime']) {
@@ -59,6 +68,6 @@ else if ($_GET['getEntries']) {
 		echo json_encode($selected_entries);
 	}
 	else {
-		echo $entries_prior_json;
+		echo json_encode($entries_prior);
 	}
 }

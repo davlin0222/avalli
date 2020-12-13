@@ -7,7 +7,7 @@ a_datePicker_addEventListener();
 
 renderEntriesOfSelectedDate();
 
-addEventListenersToDatePickerShifters();
+addEventListenersToMenu();
 
 /* ------------------------------- Procedures ------------------------------- */
 
@@ -23,9 +23,10 @@ function a_datePicker_addEventListener() {
 	const a_datePicker = document.querySelector('.a_datePicker');
 	a_datePicker.addEventListener('change', renderEntriesOfSelectedDate);
 }
-function addEventListenersToDatePickerShifters() {
+function addEventListenersToMenu() {
 	document.querySelector('.a_datePicker--shifter._-1').addEventListener('click', () => selectedDate_shift(-1));
 	document.querySelector('.a_datePicker--shifter._1').addEventListener('click', () => selectedDate_shift(+1));
+	document.querySelector('.m_menu--export').addEventListener('click', export_clipboard);
 }
 
 async function renderEntriesOfSelectedDate() {
@@ -78,6 +79,7 @@ function entriesDatabase_delete(id) {
 	fetch('public/src/entries.php?delete=' + id);
 }
 
+
 /* --------------------------------- Events --------------------------------- */
 
 function selectedDate_shift(factor) {
@@ -127,7 +129,31 @@ function a_entry_update(e, id) {
 	}
 }
 
+// Export as formatted string to clipboard
+async function export_clipboard() {
+	let selectedDate_startOfDay = new Date(Date.parse(a_datePicker_get() + "T00:00"));
+	let selectedDate_startOfNextDay = 
+		startOfNextDay(new Date(selectedDate_startOfDay));
+
+	let res = await fetch('public/src/entries.php?getEntries=true&start-datetime=' + selectedDate_startOfDay.getTime() + '&end-datetime=' + selectedDate_startOfNextDay.getTime());
+	let entries_data = await res.json();
+	let formattedString = entries_data_ofDay_toFormattedString(entries_data);
+    console.log('export_clipboard ~ formattedString', formattedString);
+	navigator.clipboard.writeText(formattedString);
+}
+
 /* ----------------------------- Pure functions ----------------------------- */
+
+function entries_data_ofDay_toFormattedString(entries_data) {
+		let formattedString = '';
+	entries_data.forEach((entry) => {
+		let date = new Date();
+		date.setTime(entry.datetime);
+		let formattedTime = formatTime(date);
+		formattedString += '\n' + formattedTime + ' - ' + entry.food + '\n';
+	})
+	return formattedString;
+}
 
 function new_entry_withData(entryObj, entryTemplate) {
 	let newEntry = new_entry(entryObj.id, entryTemplate);

@@ -24,7 +24,7 @@ input {
   padding: 10px;
 }
 
-.a_datePicker {
+.m_menu {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
@@ -36,6 +36,23 @@ input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.m_menu--export {
+  width: 30px;
+  background: transparent;
+  border: none;
+  margin-left: 20px;
+}
+
+.m_menu--export img {
+  width: 100%;
+}
+
+.a_datePicker {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .a_datePicker--shifter {

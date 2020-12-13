@@ -4,8 +4,8 @@ require_once '../src/Templating.php';
 
 $mainTemplate = new Templating('main');
 
-/* $_SESSION['avalli']['isLoggedIn'] = true;
-$_SESSION['avalli']['username'] = 'davlin'; */
+$_SESSION['avalli']['isLoggedIn'] = true;
+$_SESSION['avalli']['username'] = 'davlin';
 
 if ($_SESSION['avalli']['isLoggedIn']) {
 	$mainTemplate->add('title', 'Avalli');

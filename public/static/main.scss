@@ -22,12 +22,25 @@ input {
 	padding: 10px;
 }
 
-.a_datePicker {
+.m_menu {
 	width: max-content;
 	margin: auto;
 	margin-bottom: 10px;
 	display: flex;
 	align-items: center;
+}
+.m_menu--export {
+	width: 30px;
+	background: transparent;
+	border: none;
+	margin-left: 20px;
+	img {
+		width: 100%;
+	}
+}
+
+.a_datePicker {
+	width: max-content;
 }
 .a_datePicker--shifter {
 	padding: 0px 12px 5px;

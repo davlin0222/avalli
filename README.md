@@ -1,10 +1,11 @@
-# avalli
+avalli
+=
 
 Your personal daily intake diary and food journal
+<br>
 
-<br>
-<img style="width: 60vw;" src=".github/images/example.png">
-<br>
+![public/index.php](.github/screenshots/application/entries-example.png)
+
 <br>
 <br>
 
@@ -17,6 +18,6 @@ Your personal daily intake diary and food journal
 
 # Code
 
-![index.php](.github/images/screenshots/public-index.php.png)
+![index.php](.github/screenshots/code/public-index.php.png)
 
 First step into the application

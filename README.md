@@ -16,10 +16,3 @@ First step into the application
 
 
 
-
-
-<style>
-body {
-	background: #011627;
-}
-</style>

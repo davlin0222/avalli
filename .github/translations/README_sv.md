@@ -10,16 +10,11 @@ Din personliga mat dagbok och mat journal
 
 ## Kod 
 
-![index.php](../images/screenshots/public-index.png)
+![public/index.php](../images/screenshots/public-index.php.png)
+Första steget in i applicationen. Här skapas template objektet vilket används för att lägga till titel och vilken view som ska visas. Nu skickas entries.html ut till klienten.
 
-Första steget in i applicationen
-
-
-
+![A part of src/templates/entries.html](../images/screenshots/src-templates-entries.html.png)
 
 
-<style>
-body {
-	background: #011627;
-}
-</style>
+
+

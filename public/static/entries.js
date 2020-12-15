@@ -1,5 +1,4 @@
 import { v4 } from '../../node_modules/uuid/dist/esm-browser/index.js';
-const publicSrcPath = 'https://creatorise.com/avalli-v1.3-alpha/public/src';
 
 /* --------------------------------- OnLoad --------------------------------- */
 
@@ -8,7 +7,7 @@ a_datePicker_addEventListener();
 
 renderEntriesOfSelectedDate();
 
-addEventListenersToDatePickerShifters();
+addEventListenersToMenu();
 
 /* ------------------------------- Procedures ------------------------------- */
 
@@ -24,9 +23,10 @@ function a_datePicker_addEventListener() {
 	const a_datePicker = document.querySelector('.a_datePicker');
 	a_datePicker.addEventListener('change', renderEntriesOfSelectedDate);
 }
-function addEventListenersToDatePickerShifters() {
+function addEventListenersToMenu() {
 	document.querySelector('.a_datePicker--shifter._-1').addEventListener('click', () => selectedDate_shift(-1));
 	document.querySelector('.a_datePicker--shifter._1').addEventListener('click', () => selectedDate_shift(+1));
+	document.querySelector('.m_menu--export').addEventListener('click', export_clipboard);
 }
 
 async function renderEntriesOfSelectedDate() {
@@ -44,14 +44,14 @@ async function renderEntriesOfSelectedDate() {
 
 async function fetchEntryTemplateNode() {
 	// Fetching entry template view from server
-	let res = await fetch(publicSrcPath + '/views.php?getView=entry');
+	let res = await fetch('public/src/views.php?getView=entry');
 	let entry_outerHtml = await res.text();
 	let entryTemplateNode = createNodeFromOuterHtml(entry_outerHtml);
 	return entryTemplateNode
 }
 
 async function setEntriesFromDb(m_entries, entryTemplateNode, selectedDate_startOfDay, selectedDate_startOfNextDay) {
-	let res = await fetch(publicSrcPath + '/entries.php?getEntries=true&start-datetime=' + selectedDate_startOfDay.getTime() + '&end-datetime=' + selectedDate_startOfNextDay.getTime());
+	let res = await fetch('public/src/entries.php?getEntries=true&start-datetime=' + selectedDate_startOfDay.getTime() + '&end-datetime=' + selectedDate_startOfNextDay.getTime());
 	let entries_data = await res.json();
 	entries_data.forEach((entryObj) => {
 		m_entries.appendChild(new_entry_withData(entryObj, entryTemplateNode));
@@ -67,7 +67,7 @@ function entriesDatabase_putOrUpdate(id, a_entry_rawFormData) {
 	a_entry_data.delete('time');
 	a_entry_data.append('id', id);
 	
-	fetch(publicSrcPath + '/entries.php?putorupdate=true', 
+	fetch('public/src/entries.php?putorupdate=true', 
 		{
 			method: 'POST',
 			body: a_entry_data
@@ -76,8 +76,9 @@ function entriesDatabase_putOrUpdate(id, a_entry_rawFormData) {
 }
 
 function entriesDatabase_delete(id) {
-	fetch(publicSrcPath + '/entries.php?delete=' + id);
+	fetch('public/src/entries.php?delete=' + id);
 }
+
 
 /* --------------------------------- Events --------------------------------- */
 
@@ -128,7 +129,31 @@ function a_entry_update(e, id) {
 	}
 }
 
+// Export as formatted string to clipboard
+async function export_clipboard() {
+	let selectedDate_startOfDay = new Date(Date.parse(a_datePicker_get() + "T00:00"));
+	let selectedDate_startOfNextDay = 
+		startOfNextDay(new Date(selectedDate_startOfDay));
+
+	let res = await fetch('public/src/entries.php?getEntries=true&start-datetime=' + selectedDate_startOfDay.getTime() + '&end-datetime=' + selectedDate_startOfNextDay.getTime());
+	let entries_data = await res.json();
+	let formattedString = entries_data_ofDay_toFormattedString(entries_data);
+    console.log('export_clipboard ~ formattedString', formattedString);
+	navigator.clipboard.writeText(formattedString);
+}
+
 /* ----------------------------- Pure functions ----------------------------- */
+
+function entries_data_ofDay_toFormattedString(entries_data) {
+		let formattedString = '';
+	entries_data.forEach((entry) => {
+		let date = new Date();
+		date.setTime(entry.datetime);
+		let formattedTime = formatTime(date);
+		formattedString += '\n' + formattedTime + ' - ' + entry.food + '\n';
+	})
+	return formattedString;
+}
 
 function new_entry_withData(entryObj, entryTemplate) {
 	let newEntry = new_entry(entryObj.id, entryTemplate);

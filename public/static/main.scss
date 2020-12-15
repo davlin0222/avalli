@@ -1,71 +1,73 @@
-*, *::before, *::after {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-size: 1.05rem;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1.05rem;
 }
 
 body {
-	background: #121212;
-	color: #eee;
-	height: 100vh;
+  background: #121212;
+  color: #eee;
+  height: 100vh;
 }
 
 input {
-	background: #313131;
-	color: #ffffff;
-	border: none;
-	height: 35px;
+  background: #313131;
+  color: #ffffff;
+  border: none;
+  height: 35px;
 }
 .o_entries {
-	width: 100vw;
-	padding: 10px;
+  width: 100vw;
+  padding: 10px;
 }
 
 .m_menu {
-	width: max-content;
-	margin: auto;
-	margin-bottom: 10px;
-	display: flex;
-	align-items: center;
+  width: max-content;
+  margin: auto;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 .m_menu--export {
-	width: 30px;
-	background: transparent;
-	border: none;
-	margin-left: 20px;
-	img {
-		width: 100%;
-	}
+  width: 30px;
+  background: transparent;
+  border: none;
+  margin-left: 20px;
+  img {
+    width: 100%;
+  }
 }
 
 .a_datePicker {
-	width: max-content;
+  width: max-content;
 }
 .a_datePicker--shifter {
-	padding: 0px 12px 5px;
-	background: #212121;
-	color: #bbbbbb;
-	border: none;
-	font-size: 1.5rem;
+  padding: 0px 12px 5px;
+  background: #212121;
+  color: #bbbbbb;
+  border: none;
+  font-size: 1.5rem;
 }
 
 .m_entries {
-	width: 100%;
-	max-width: 400px;
-	margin: auto;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
 }
 .a_entry {
-	margin-bottom: 3px;
-	width: 100%;
-	display: flex;
-	gap: 5px;
+  margin-bottom: 3px;
+  width: 100%;
+  display: flex;
+  gap: 5px;
 }
 .a_entry--food {
-	flex: 1;
-	font-size: 1rem;
-	padding-left: 6px;
+  flex: 1;
+  font-size: 1rem;
+  padding-left: 6px;
 }
 .a_entry--time {
-	padding: 10px;
+  padding: 10px;
 }

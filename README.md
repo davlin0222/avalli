@@ -1,18 +1,22 @@
 # avalli
+
 Your personal daily intake diary and food journal
 
+<br>
 <img style="width: 60vw;" src=".github/images/example.png">
+<br>
+<br>
+<br>
 
+# Languages
 
-## Languages
-English [Swedish](.github/translations/README_sv.md)
+### English [Swedish](.github/languages/README_sv.md)
+#### Swedish is the primary language of the docs
+<br>
+<br>
 
+# Code
 
-## Code 
-
-![index.php](.github/images/screenshots/public-index.png)
+![index.php](.github/images/screenshots/public-index.php.png)
 
 First step into the application
-
-
-

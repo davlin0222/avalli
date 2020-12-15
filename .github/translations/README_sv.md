@@ -8,6 +8,18 @@ Din personliga mat dagbok och mat journal
 [English](../../README.md) Swedish
 
 
+## Använder
+### Språk
+- HTML
+- scss ->css
+- JS
+- PHP
+- JSON
+
+### Struktur
+#### Egen modifierad Atom-bem scss
+
+
 ## Kod 
 
 ![public/index.php](../images/screenshots/public-index.php.png)

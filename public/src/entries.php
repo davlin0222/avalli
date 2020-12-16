@@ -2,7 +2,7 @@
 const path = '../../data/entries.json';
 
 if ($_GET['putorupdate']){
-	$newEntry = [
+	$newEntry = (object)[
 		'food' => $_POST['food'],
 		'datetime' => $_POST['datetime'],
 		'id' => $_POST['id'],
@@ -12,7 +12,7 @@ if ($_GET['putorupdate']){
 	$entries_prior_hasId = false;
 	$updated_entries = [];
 	foreach ($entries_prior as $key => $entry_prior) {
-		if ($entry_prior->id === $newEntry['id']) {
+		if ($entry_prior->id === $newEntry->id) {
 			$entries_prior_hasId = true;
 			$updated_entries[] = $newEntry;
 		} else {
@@ -24,9 +24,16 @@ if ($_GET['putorupdate']){
 	}
 
 	usort($updated_entries, function ($first, $second) {
-		return $first->date > $second->date;
+    echo "\n\n first: " . $first->food . " ";
+    var_dump($first->datetime);
+    echo "second: " . $second->food . " ";
+    var_dump($second->datetime);
+    echo "\n\n";
+		return $first->datetime > $second->datetime;
 	});
-	file_put_contents(path, json_encode($updated_entries));
+  file_put_contents(path, json_encode($updated_entries));
+  var_dump($updated_entries);
+  
 }
 else if ($_GET['delete']) {
 	$id = $_GET['delete'];

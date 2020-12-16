@@ -95,6 +95,10 @@ async function setEntriesFromDb(
 
 function entriesDatabase_putOrUpdate(id, a_entry_rawFormData) {
   let a_entry_data = a_entry_rawFormData;
+  console.log(
+    'entriesDatabase_putOrUpdate ~ a_entry_data',
+    ...a_entry_data
+  );
   let datetime = Date.parse(
     a_datePicker_get() + 'T' + a_entry_data.get('time')
   );
@@ -102,10 +106,14 @@ function entriesDatabase_putOrUpdate(id, a_entry_rawFormData) {
   a_entry_data.delete('time');
   a_entry_data.append('id', id);
 
+  //console.log('entriesDatabase_putOrUpdate ~ datetime', datetime);
+
   fetch('public/src/entries.php?putorupdate=true', {
     method: 'POST',
     body: a_entry_data,
-  });
+  })
+    .then((res) => res.text())
+    .then((text) => console.log(text));
 }
 
 function entriesDatabase_delete(id) {

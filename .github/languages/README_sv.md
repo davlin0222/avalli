@@ -85,7 +85,7 @@ Här är det event som varje entry har för att vid förändring av mat eller ti
 
 ---
 
-<br><br>
+<br>
 
 # Problem ärenden
 https://github.com/davlin0222/avalli/issues
@@ -108,13 +108,9 @@ https://github.com/davlin0222/avalli/issues/4
 
 https://github.com/davlin0222/avalli/issues/5
 
-<br>
-
----
-
 <br><br>
 
-## Använder
+# Använder
 ### Språk
 
 - PHP på backend

@@ -1,6 +1,6 @@
 {
   "name": "avalli",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "description": "Your personal daily intake diary and food journal",
   "main": "public/index.php",
   "scripts": {
@@ -18,5 +18,9 @@
   "homepage": "https://github.com/davlin0222/avalli#readme",
   "dependencies": {
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.16.1",
+    "prettier": "^2.2.1"
   }
 }

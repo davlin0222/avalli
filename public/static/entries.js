@@ -95,10 +95,6 @@ async function setEntriesFromDb(
 
 function entriesDatabase_putOrUpdate(id, a_entry_rawFormData) {
   let a_entry_data = a_entry_rawFormData;
-  console.log(
-    'entriesDatabase_putOrUpdate ~ a_entry_data',
-    ...a_entry_data
-  );
   let datetime = Date.parse(
     a_datePicker_get() + 'T' + a_entry_data.get('time')
   );
@@ -106,14 +102,10 @@ function entriesDatabase_putOrUpdate(id, a_entry_rawFormData) {
   a_entry_data.delete('time');
   a_entry_data.append('id', id);
 
-  //console.log('entriesDatabase_putOrUpdate ~ datetime', datetime);
-
   fetch('public/src/entries.php?putorupdate=true', {
     method: 'POST',
     body: a_entry_data,
-  })
-    .then((res) => res.text())
-    .then((text) => console.log(text));
+  });
 }
 
 function entriesDatabase_delete(id) {
@@ -190,10 +182,6 @@ async function export_clipboard() {
   let formattedString = entries_data_ofDay_toFormattedString(
     selectedDate_startOfDay,
     entries_data
-  );
-  console.log(
-    'export_clipboard ~ formattedString',
-    formattedString
   );
   navigator.clipboard.writeText(formattedString);
 }

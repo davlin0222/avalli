@@ -24,15 +24,9 @@ if ($_GET['putorupdate']) {
   }
 
   usort($updated_entries, function ($first, $second) {
-    echo "\n\n first: " . $first->food . ' ';
-    var_dump($first->datetime);
-    echo 'second: ' . $second->food . ' ';
-    var_dump($second->datetime);
-    echo "\n\n";
     return $first->datetime > $second->datetime;
   });
   file_put_contents(path, json_encode($updated_entries));
-  var_dump($updated_entries);
 } elseif ($_GET['delete']) {
   $id = $_GET['delete'];
   $entries_prior = json_decode(file_get_contents(path));

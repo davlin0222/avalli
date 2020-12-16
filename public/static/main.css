@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+          box-sizing: border-box;
   font-size: 1.05rem;
 }
 
@@ -36,8 +36,8 @@ input {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .m_menu--export {
@@ -82,10 +82,10 @@ input {
 
 .a_entry--food {
   -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   font-size: 1rem;
-  padding-left: 6px;
+  padding: 0 6px;
 }
 
 .a_entry--time {

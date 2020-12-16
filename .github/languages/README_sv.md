@@ -124,3 +124,4 @@ https://github.com/davlin0222/avalli/issues/5
 ### Dependencies
 - npm
   - uuid
+- A way to compile sass

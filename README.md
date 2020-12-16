@@ -6,8 +6,20 @@ Your personal daily intake diary and food journal
 
 ![public/index.php](.github/screenshots/application/entries-example.png)
 
+<br><br>
+
+# Usage
+
+GitHub repository: https://github.com/davlin0222/avalli
+
 <br>
-<br>
+
+### Test by
+
+- Download and run on local server, or
+- For everyone who wants to test beta before the addition of separate users:  https://creatorise.com/avalli
+
+<br><br>
 
 # Languages
 

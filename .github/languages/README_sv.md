@@ -8,6 +8,19 @@ Din personliga matjournal och matlista
 
 <br><br>
 
+# Användning
+
+GitHub repository: https://github.com/davlin0222/avalli
+
+<br>
+
+### Testa genom att 
+
+- Ladda ner och kör på lokal server, eller
+- För alla som vill testa beta innan tilläggning av separata användare:  https://creatorise.com/avalli
+
+<br><br>
+
 # Languages
 
 ### [English](../../README.md) Swedish

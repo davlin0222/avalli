@@ -85,9 +85,6 @@ Här är det event som varje entry har för att vid förändring av mat eller ti
 
 ---
 
-![public/static/entries.js line 150-164](../screenshots/code/public-static-entries.js-150-164.png)
-
----
 <br><br>
 
 # Problem ärenden

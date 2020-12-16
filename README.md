@@ -14,10 +14,10 @@ GitHub repository: https://github.com/davlin0222/avalli
 
 <br>
 
-### Test by
+### Check out avalli
 
-- Download and run on local server, or
-- For everyone who wants to test beta before the addition of separate users:  https://creatorise.com/avalli
+- By downloading and running on local server, or
+- For everyone who wants to test the global beta version, before the addition of separate users:  https://creatorise.com/avalli
 
 <br><br>
 

@@ -6,7 +6,7 @@ Din personliga matjournal och matlista
 
 ![public/index.php](../screenshots/application/entries-example.png)
 
-<br><br>
+<br>
 
 # Användning
 
@@ -19,14 +19,14 @@ GitHub repository: https://github.com/davlin0222/avalli
 - Genom att ladda ner och köra på lokal server, eller
 - För alla som vill testa den globala beta versionen, innan tilläggning av separata användare:  https://creatorise.com/avalli
 
-<br><br>
+<br>
 
 # Languages
 
 ### [English](../../README.md) Swedish
 #### Swedish is the primary language of the docs
 
-<br><br>
+<br>
 
 # Kod
 
@@ -87,9 +87,6 @@ Här är det event som varje entry har för att vid förändring av mat eller ti
 
 ![public/static/entries.js line 150-164](../screenshots/code/public-static-entries.js-150-164.png)
 
-
-<br>
-
 ---
 <br><br>
 
@@ -100,15 +97,18 @@ https://github.com/davlin0222/avalli/issues
 
 <br>
 
-## Extra beylsta befintiliga problem
+## Extra belysta befintliga problem
 
 ![public/static/entries.js line 189](../screenshots/code/public-static-entries.js-189.png)
 
 Denna rad används vid exportering genom att kopiera den formaterade strängen till användarens clipboard. Detta har upptäckts inte fungera på DuckDuckGo:s och Safari:s mobila webbläsare. 
+
 https://github.com/davlin0222/avalli/issues/4
+
 <br><br>
 
 Ändrar man tiden på en entry, innan mat lagts till, tas den bort. 
+
 https://github.com/davlin0222/avalli/issues/5
 
 <br>
@@ -134,3 +134,12 @@ https://github.com/davlin0222/avalli/issues/5
 - npm
   - uuid
 - A way to compile sass
+
+<br>
+
+---
+
+<br>
+
+# Enormt Tack till
+## Bästa läraren - [Fredric Persson](https://github.com/freddeP)

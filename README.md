@@ -6,7 +6,7 @@ Your personal daily intake diary and food journal
 
 ![public/index.php](.github/screenshots/application/entries-example.png)
 
-<br><br>
+<br>
 
 # Usage
 
@@ -19,7 +19,7 @@ GitHub repository: https://github.com/davlin0222/avalli
 - By downloading and running on local server, or
 - For everyone who wants to test the global beta version, before the addition of separate users:  https://creatorise.com/avalli
 
-<br><br>
+<br>
 
 # Languages
 
@@ -29,3 +29,4 @@ GitHub repository: https://github.com/davlin0222/avalli
 <br>
 
 ### You know Swedish right? Then maybe you would like to read the code documentation? Currently only available in Swedish
+

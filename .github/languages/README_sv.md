@@ -24,6 +24,7 @@ Din personliga matjournal och matlista
 Första steget in i applicationen. Här skapas template objektet
 vilket används för att lägga till titel och vilken view som ska
 visas. Nu skickas entries.html ut till klienten.
+<br>
 
 ---
 
@@ -31,17 +32,20 @@ visas. Nu skickas entries.html ut till klienten.
 
 En datumväljare som väljer vilka food entries som ska visas. Dessa
 entries läggs i m_entries som ett utifrån entry.html
+<br>
 
 ---
 
 ![src/templates/entries.html](../screenshots/code/src-templates-entry.html.png)
 
 Denna vy hämtas genom fetch i entries.js som körs av entries.html
+<br>
 
 ---
-![public/static/entry.js](../screenshots/code/public-static-entries.js-68-74.png)![public/src/views.php](../screenshots/code/public-src-views.php.png)
+![public/static/entry.js 68-74](../screenshots/code/public-static-entries.js-68-74.png)![public/src/views.php](../screenshots/code/public-src-views.php.png)
 
-Här hämtas entries.html
+Här hämtas entry.html
+<br>
 
 ---
 

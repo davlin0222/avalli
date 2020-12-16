@@ -188,6 +188,7 @@ async function export_clipboard() {
   );
   let entries_data = await res.json();
   let formattedString = entries_data_ofDay_toFormattedString(
+    selectedDate_startOfDay,
     entries_data
   );
   console.log(
@@ -199,14 +200,13 @@ async function export_clipboard() {
 
 /* ----------------------------- Pure functions ----------------------------- */
 
-function entries_data_ofDay_toFormattedString(entries_data) {
-  let formattedString = '';
+function entries_data_ofDay_toFormattedString(date, entries_data) {
+  let formattedString = formatDate_nice(date);
   entries_data.forEach((entry) => {
     let date = new Date();
     date.setTime(entry.datetime);
     let formattedTime = formatTime(date);
-    formattedString +=
-      '\n' + formattedTime + ' - ' + entry.food + '\n';
+    formattedString += '\n\n' + formattedTime + ' - ' + entry.food;
   });
   return formattedString;
 }
@@ -282,6 +282,24 @@ function formatDate(date) {
     (date.getDate() < 10 ? '0' : '') +
     date.getDate()
   );
+}
+
+function formatDate_nice(date) {
+  let months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  return date.getDate() + ' ' + months[date.getMonth()];
 }
 
 function startOfNextDay(date) {

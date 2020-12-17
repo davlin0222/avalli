@@ -28,7 +28,7 @@ GitHub repository: https://github.com/davlin0222/avalli
 
 <br>
 
-# Kod
+# Kod dokumentation
 
 ![public/index.php](../screenshots/code/public-index.php.png)
 
